@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import axios from '../../../axios';
 
 import './FullPost.css';
-import axios from 'axios';
 
 class FullPost extends Component {
     constructor(props) {
@@ -12,18 +12,18 @@ class FullPost extends Component {
         };
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         // Don't get post if post id is not passed
-        if (! this.props.id) {
+        if (! this.props.match.params.id) {
             return;
         }
 
         // If the current loaded post is already in the state
-        if (this.state.loadedPost && this.state.loadedPost.id === this.props.id) {
+        if (this.state.loadedPost && this.state.loadedPost.id === this.props.match.params.id) {
             return;
         }
 
-        axios.get('/posts/' + this.props.id)
+        axios.get('/posts/' + this.props.match.params.id)
             .then((response) => {
                 this.setState({
                     loadedPost: response.data,
@@ -36,11 +36,11 @@ class FullPost extends Component {
             return;
         }
 
-        if (this.state.loadedPost.id !== this.props.id) {
+        if (this.state.loadedPost.id !== this.props.match.params.id) {
             return;
         }
 
-        axios.delete('/posts/' + this.props.id)
+        axios.delete('/posts/' + this.props.match.params.id)
             .then((response) => {
                 console.log(response);
             });
@@ -49,11 +49,11 @@ class FullPost extends Component {
     render () {
         let post = <p style={{textAlign: 'center'}}>Please select a Post!</p>;
 
-        if (this.props.id) {
+        if (! this.state.loadedPost) {
             post = <p style={{textAlign: 'center'}}>Loading...</p>;
         }
 
-        if (this.state.loadedPost && this.state.loadedPost.id === this.props.id) {
+        if (this.state.loadedPost && this.state.loadedPost.id == this.props.match.params.id) {
             post = (
                 <div className="FullPost">
                     <h1>{this.state.loadedPost.title}</h1>
