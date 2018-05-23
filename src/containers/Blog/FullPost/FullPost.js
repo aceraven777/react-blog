@@ -12,14 +12,14 @@ class FullPost extends Component {
         };
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         // Don't get post if post id is not passed
         if (! this.props.match.params.id) {
             return;
         }
 
         // If the current loaded post is already in the state
-        if (this.state.loadedPost && this.state.loadedPost.id === this.props.match.params.id) {
+        if (this.state.loadedPost && this.state.loadedPost.id == this.props.match.params.id) {
             return;
         }
 
