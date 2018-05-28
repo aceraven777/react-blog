@@ -12,7 +12,15 @@ class FullPost extends Component {
         };
     }
 
+    componentDidMount() {
+        this.loadData();
+    }
+
     componentDidUpdate() {
+        this.loadData();
+    }
+    
+    loadData() {
         // Don't get post if post id is not passed
         if (! this.props.match.params.id) {
             return;
@@ -47,11 +55,7 @@ class FullPost extends Component {
     }
 
     render () {
-        let post = <p style={{textAlign: 'center'}}>Please select a Post!</p>;
-
-        if (! this.state.loadedPost) {
-            post = <p style={{textAlign: 'center'}}>Loading...</p>;
-        }
+        let post = <p style={{textAlign: 'center'}}>Loading...</p>;
 
         if (this.state.loadedPost && this.state.loadedPost.id == this.props.match.params.id) {
             post = (
