@@ -25,8 +25,6 @@ class NewPost extends Component {
     }
 
     render () {
-        let redirect = null;
-
         return (
             <div className="NewPost">
                 <h1>Add a Post</h1>
